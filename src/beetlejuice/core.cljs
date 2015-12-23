@@ -24,7 +24,7 @@
     (casperjs/then ...)
     (casperjs/wait 100 ...)
     (println "ss!")
-    (casperjs/capture (str "resources/e2e_test_ss/" name ".png"))))
+    (casperjs/capture (str "target/e2e_test_screenshots/" name ".png"))))
 
 (defn fill-selectors
   [sel data]
