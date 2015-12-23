@@ -27,7 +27,7 @@
   [sel data]
   (asynchronize
     (casperjs/then ...)
-    (casperjs/fill-selectors sel data)))
+    (casperjs/fill-selectors sel data false)))
 
 (defn fill-selectors-by-order
   [sel data]
