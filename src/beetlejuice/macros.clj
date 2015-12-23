@@ -9,9 +9,7 @@
 (defn- callback [sc]
   `(fn []
      (cljs.core.async.macros/go
-       (~'>! ~sc "weeee")
-       (println "macro callback!")
-       )))
+       (~'>! ~sc "weeee"))))
 
 
 (defn- close-chan [sc]

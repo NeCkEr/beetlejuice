@@ -8,14 +8,12 @@
 (defn click [sel]
   (asynchronize
     (casperjs/then ...)
-    (println "clickk!!")
     (casperjs/click sel)))
 
 (defn wait-for-selector
   [sel]
    (asynchronize
      (casperjs/then ...)
-     (println "wait for selector")
      (casperjs/wait-for-selector sel)))
 
 (defn sreen-shot
@@ -23,19 +21,16 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/wait 100 ...)
-    (println "ss!")
     (casperjs/capture (str "target/e2e_test_screenshots/" name ".png"))))
 
 (defn fill-selectors
   [sel data]
   (asynchronize
     (casperjs/then ...)
-    (println "fill-selectors")
     (casperjs/fill-selectors sel data)))
 
 (defn fill-selectors-by-order
   [sel data]
   (asynchronize
     (casperjs/then ...)
-    (println "fill-selectors-by-order")
     (casperjs/fill-selectors-by-order sel data)))
