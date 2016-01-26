@@ -47,6 +47,11 @@
 
 (defn click [sel] (.click *casper* (name sel)))
 
+(defn click-xpath
+  [sel]
+  (let [xpath {:type "xpath" :path sel}]
+    (.click *casper* (clj->js xpath))))
+
 (defn click-label
   ([s] (.clickLabel *casper* s))
   ([s tag] (.clickLabel *casper* s (name tag))))

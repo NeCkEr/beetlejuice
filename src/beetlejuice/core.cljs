@@ -10,6 +10,11 @@
     (casperjs/then ...)
     (casperjs/click sel)))
 
+(defn click-xpath [sel]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/click-xpath sel)))
+
 (defn wait-for-selector
   [sel]
    (asynchronize
