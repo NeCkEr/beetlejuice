@@ -16,6 +16,12 @@
      (casperjs/then ...)
      (casperjs/wait-for-selector sel)))
 
+(defn wait-for-xpath
+  [path]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/wait-for-xpath path)))
+
 (defn sreen-shot
   [name]
   (asynchronize

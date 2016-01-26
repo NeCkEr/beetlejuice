@@ -175,6 +175,11 @@
   ([pred f on-timeout] (.waitFor *casper* pred f on-timeout))
   ([pred f on-timeout time] (.waitFor *casper* pred f on-timeout time)))
 
+(defn wait-for-xpath
+  [path]
+  (let [xpath {:type "xpath" :path path}]
+    (.waitForSelector *casper* (clj->js xpath))))
+
 (defn wait-for-selector
   ([sel] (.waitForSelector *casper* (name sel)))
   ([sel f] (.waitForSelector *casper* (name sel) f))
