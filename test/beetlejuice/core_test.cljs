@@ -2,7 +2,8 @@
   (:require-macros [cljs.test :refer (is deftest testing async)])
   (:require [cljs.test]
             [beetlejuice.core :as beetlejuice]
-            [beetlejuice.casperjs :as casperjs :refer [*casper*]]))
+            [beetlejuice.casperjs :as casperjs :refer [*casper*]]
+            [beetlejuice.todos :refer [clean-todos add-todos mark-as-done]]))
 
 (enable-console-print!)
 
@@ -28,12 +29,16 @@
 (casperjs/start
   "resources/reagent-todo/index.html"
   (fn []
-      (casperjs/echo "Casper tests starting...")
-      (beetlejuice/sreen-shot "index")
-      (beetlejuice/wait-for-xpath "//*[@id='todoapp']")
-      (beetlejuice/click-xpath "//*[@id='todoapp']")
-      (beetlejuice/sreen-shot "index")))
+    (casperjs/echo "BeetleJuice tests starting...")
+    (beetlejuice/sreen-shot "index")
+    (clean-todos)
+    (beetlejuice/sreen-shot "cleaned-todos")
+    (add-todos)
+    (beetlejuice/sreen-shot "added-todos")
+    (mark-as-done)
+    (beetlejuice/sreen-shot "marked-done")))
 
- (casperjs/run)
+
+(casperjs/run)
 
 
