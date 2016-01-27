@@ -23,6 +23,8 @@
 ;; Casper API
 ;;
 
+
+
 (defn then [f] (.then *casper* f))
 
 (defn then-evaluate
@@ -50,7 +52,7 @@
 (defn click-xpath
   [sel]
   (let [xpath {:type "xpath" :path sel}]
-    (.click *casper* (clj->js xpath))))
+    (.click *casper* (.selectXPath (require-js "casper") (name sel)))))
 
 (defn click-label
   ([s] (.clickLabel *casper* s))
@@ -183,7 +185,7 @@
 (defn wait-for-xpath
   [path]
   (let [xpath {:type "xpath" :path path}]
-    (.waitForSelector *casper* (clj->js xpath))))
+    (.waitForSelector *casper* (.selectXPath (require-js "casper") (name path)))))
 
 (defn wait-for-selector
   ([sel] (.waitForSelector *casper* (name sel)))
