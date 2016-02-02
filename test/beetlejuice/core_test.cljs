@@ -1,8 +1,10 @@
 (ns beetlejuice.core-test
-  (:require-macros [cljs.test :refer (is deftest testing async)])
+  (:require-macros [cljs.test :refer (is deftest testing async)]
+                   [cljs.core.async.macros :as am :refer [go]])
   (:require [cljs.test]
+            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [beetlejuice.core :as beetlejuice]
-            [beetlejuice.casperjs :as casperjs :refer [*casper*]]
+            [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
             [beetlejuice.todos :refer [clean-todos add-todos mark-as-done]]))
 
 (enable-console-print!)
@@ -29,14 +31,18 @@
 (casperjs/start
   "resources/reagent-todo/index.html"
   (fn []
-    (casperjs/echo "BeetleJuice tests starting...")
-    (beetlejuice/sreen-shot "index")
-    (clean-todos)
-    (beetlejuice/sreen-shot "cleaned-todos")
-    (add-todos)
-    (beetlejuice/sreen-shot "added-todos")
-    (mark-as-done)
-    (beetlejuice/sreen-shot "marked-done")))
+    (go
+      (casperjs/echo "BeetleJuice tests starting...")
+      (let [test (<! (beetlejuice/getElementHiccup "#app"))]
+        ;(= [:button ??] test)
+        (println (str test))
+        (beetlejuice/sreen-shot "1-index")
+        (clean-todos)
+        (beetlejuice/sreen-shot "2-cleaned-todos")
+        (add-todos)
+        (beetlejuice/sreen-shot "3-added-todos")
+        (mark-as-done)
+        (beetlejuice/sreen-shot "4-marked-done")))))
 
 
 (casperjs/run)

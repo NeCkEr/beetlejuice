@@ -20,6 +20,12 @@ style.com e2e test framework
 
 FIXME
 
+## Run Tests
+
+```
+   lein e2e-test
+```
+
 ## License
 
 Copyright © 2015 CN Commerce Ltd.

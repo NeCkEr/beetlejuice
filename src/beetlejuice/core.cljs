@@ -3,7 +3,10 @@
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs]
-            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]))
+            [hickory.core :as hickory :refer [as-hiccup as-hickory parse parse-fragment]]
+            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
+            [clojure.string :as string]
+            [clojure.walk :refer [postwalk]]))
 
 (defn click [sel]
   (asynchronize
@@ -14,12 +17,41 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/click-xpath sel)))
+[:div {:id "app"}
+ [:input "asdasdas"]]
+
+(defn remove-reactid
+  [html]
+  (string/replace html #"data-reactid=\"[a-zA-Z0-9:;\.\s\(\)\-\,\$]*\"" ""))
+
+
+(defn remove-empty-maps
+  "given a arbitriary form it checks if is a list or a vector and removes empty maps"
+  [node]
+  (if (or (vector? node) (list? node))
+    (->> node
+         (remove #(= {} %))
+         vec)
+    node))
+
+(defn getElementHiccup
+  [el]
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (let [casper-html-info (first (casperjs/getElementInfo el))
+            element-html     (remove-reactid (:html casper-html-info))
+            parsed-frag (parse-fragment element-html)
+            hiccup-map (first (map as-hiccup parsed-frag))
+            hiccup-map (postwalk remove-empty-maps hiccup-map)]
+        (>! chan hiccup-map)))
+    chan))
 
 (defn wait-for-selector
   [sel]
-   (asynchronize
-     (casperjs/then ...)
-     (casperjs/wait-for-selector sel)))
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/wait-for-selector sel)))
 
 (defn wait-for-xpath
   [path]

@@ -1,8 +1,8 @@
 (ns beetlejuice.casperjs)
 
-
 (def require-js js/require)
 
+(def utils (require-js "utils"))
 
 ;;
 ;; Casper instance
@@ -23,7 +23,9 @@
 ;; Casper API
 ;;
 
-
+(defn dump
+  [s]
+  (.dump utils (clj->js s)))
 
 (defn then [f] (.then *casper* f))
 
@@ -125,6 +127,10 @@
   (doseq [[k v] data]
     (println (str k " " v))
     (fill-selectors sel {k v})))
+
+(defn getElementInfo
+  [el]
+  (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
 
 (defn get-current-url [] (.getCurrentUrl *casper*))
 
