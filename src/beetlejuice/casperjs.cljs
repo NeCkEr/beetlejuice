@@ -11,6 +11,12 @@
        :dynamic true}
 *casper* (.create (require-js "casper")))
 
+;;
+;; Casper mouse instance
+;;
+(def ^{:doc     "Default casper instance, can be overridden by using set-casper-options!"
+       :dynamic true}
+*mouse* (.create (require-js "mouse") *casper*))
 
 (defn set-casper-options!
   "Redefine *casper* with specific options: http://casperjs.org/api.html#casper.options"
@@ -59,6 +65,12 @@
 (defn click-label
   ([s] (.clickLabel *casper* s))
   ([s tag] (.clickLabel *casper* s (name tag))))
+
+
+(defn mouse-move
+  [sel]
+  (.move (.-mouse *casper*) (name sel)))
+
 
 (defn capture
   ([path] (.capture *casper* path))

@@ -17,13 +17,16 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/click-xpath sel)))
-[:div {:id "app"}
- [:input "asdasdas"]]
+
+(defn mouse-move
+  [sel]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/mouse-move sel)))
 
 (defn remove-reactid
   [html]
   (string/replace html #"data-reactid=\"[a-zA-Z0-9:;\.\s\(\)\-\,\$]*\"" ""))
-
 
 (defn remove-empty-maps
   "given a arbitriary form it checks if is a list or a vector and removes empty maps"

@@ -33,18 +33,25 @@
   (fn []
     (go
       (casperjs/echo "BeetleJuice tests starting...")
-      (let [test (<! (beetlejuice/getElementHiccup "#app"))]
-        ;(= [:button ??] test)
-        (println (str test))
-        (beetlejuice/sreen-shot "1-index")
-        (clean-todos)
-        (beetlejuice/sreen-shot "2-cleaned-todos")
-        (add-todos)
-        (beetlejuice/sreen-shot "3-added-todos")
-        (mark-as-done)
-        (beetlejuice/sreen-shot "4-marked-done")))))
+      (let [app (<! (beetlejuice/getElementHiccup "#app"))]
+        (beetlejuice/mouse-move "#todo-list li:first-child")
+        (let [list1-hiccup (<! (beetlejuice/getElementHiccup "#todo-list li:nth-child(1)"))
+              list2-hiccup (<! (beetlejuice/getElementHiccup "#todo-list li:nth-child(2)"))]
+          (println list1-hiccup)
+          (println list2-hiccup)
+          (beetlejuice/sreen-shot "1-index")
+          (clean-todos)
+          (beetlejuice/sreen-shot "2-cleaned-todos")
+          (add-todos)
+          (beetlejuice/sreen-shot "3-added-todos")
+          (mark-as-done)
+          (beetlejuice/sreen-shot "4-marked-done"))))))
 
 
 (casperjs/run)
 
 
+
+
+[:div {:class view} [:input {:type checkbox, :checked , :class toggle}] [:label Rename Cloact to Reagent] [:button {:class destroy}]]
+[:div {:class view} [:input {:type checkbox, :checked , :class toggle}] [:label Add undo demo] [:button {:class destroy}]]
