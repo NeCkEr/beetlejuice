@@ -49,9 +49,3 @@
 
 
 (casperjs/run)
-
-
-
-
-[:div {:class view} [:input {:type checkbox, :checked , :class toggle}] [:label Rename Cloact to Reagent] [:button {:class destroy}]]
-[:div {:class view} [:input {:type checkbox, :checked , :class toggle}] [:label Add undo demo] [:button {:class destroy}]]
