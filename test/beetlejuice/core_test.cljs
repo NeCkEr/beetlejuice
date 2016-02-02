@@ -33,10 +33,10 @@
   (fn []
     (go
       (casperjs/echo "BeetleJuice tests starting...")
-      (let [app (<! (beetlejuice/getElementHiccup "#app"))]
+      (let [app (<! (beetlejuice/get-element-hiccup "#app"))]
         (beetlejuice/mouse-move "#todo-list li:first-child")
-        (let [list1-hiccup (<! (beetlejuice/getElementHiccup "#todo-list li:nth-child(1)"))
-              list2-hiccup (<! (beetlejuice/getElementHiccup "#todo-list li:nth-child(2)"))]
+        (let [list1-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(1)"))
+              list2-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(2)"))]
           (println list1-hiccup)
           (println list2-hiccup)
           (beetlejuice/sreen-shot "1-index")

@@ -1,4 +1,5 @@
-(ns beetlejuice.casperjs)
+(ns beetlejuice.casperjs
+  (:refer-clojure :exclude [repeat]))
 
 (def require-js js/require)
 
@@ -177,10 +178,6 @@
 
 (defn start
   ([url] (.start *casper* url))
-  ([url f] (.start *casper* url f)))
-
-(defn test
-  ([description] (.start *casper*.test url))
   ([url f] (.start *casper* url f)))
 
 

@@ -1,5 +1,4 @@
 (ns beetlejuice.core
-  (:refer-clojure :exclude [repeat])
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs]
@@ -37,7 +36,7 @@
          vec)
     node))
 
-(defn getElementHiccup
+(defn get-element-hiccup
   [el]
   (let [chan (chan 1)]
     (asynchronize
