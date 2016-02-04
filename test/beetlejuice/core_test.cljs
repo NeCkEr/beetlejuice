@@ -39,13 +39,13 @@
               list2-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(2)"))]
           (println list1-hiccup)
           (println list2-hiccup)
-          (beetlejuice/sreen-shot "1-index")
+          (beetlejuice/screen-shot "1-index")
           (clean-todos)
-          (beetlejuice/sreen-shot "2-cleaned-todos")
+          (beetlejuice/screen-shot "2-cleaned-todos")
           (add-todos)
-          (beetlejuice/sreen-shot "3-added-todos")
+          (beetlejuice/screen-shot "3-added-todos")
           (mark-as-done)
-          (beetlejuice/sreen-shot "4-marked-done"))))))
+          (beetlejuice/screen-shot "4-marked-done"))))))
 
 
 (casperjs/run)

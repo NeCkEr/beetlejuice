@@ -1,5 +1,5 @@
 (defproject beetlejuice "0.1.0-SNAPSHOT"
-  
+
   :description "CasperJS single-page application testing tools for ClojureScript"
 
   :url "https://github.com/cncommerce/beetlejuice"
@@ -18,7 +18,7 @@
 
   :profiles {:e2e-test {:cljsbuild {:test-commands {"e2e-test" ["casperjs" ".e2e-test/target/app.js"]}
                                     :builds        [{:id           "e2e-test"
-                                                     :source-paths ["test/beetlejuice" "src/"]
+                                                     :source-paths ["src" "test"]
                                                      :compiler     {:main          beetlejuice.core-test
                                                                     :output-to     ".e2e-test/target/app.js"
                                                                     :output-dir    ".e2e-test/target/"
