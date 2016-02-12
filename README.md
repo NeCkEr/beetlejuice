@@ -1,30 +1,25 @@
 # beetlejuice
 
-style.com e2e test framework
+ClojureScript bindings for CasperJS, with additional sugar.
 
 # Prerequisities
 
 ## Install nvm & nodejs & npm & phantomJS & casperJS
 
 ### OSX
-```
-   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
-   source ~/.nvm/nvm.sh
-   nvm install v4.2.3
-   nvm alias default v4.2.3
-   npm install --global phantomjs@1.9.8
-   npm install --global casperjs@1.1.0-beta3
-```
 
-## Usage
-
-FIXME
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
+    source ~/.nvm/nvm.sh
+    nvm install v4.2.3
+    nvm alias default v4.2.3
+    npm install --global phantomjs@1.9.8
+    npm install --global casperjs@1.1.0-beta3
 
 ## Run Tests
 
-```
-   lein e2e-test
-```
+You can run Beetlejuice's own tests
+
+    lein e2e-test
 
 ## License
 
