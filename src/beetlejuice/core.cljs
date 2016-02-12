@@ -55,6 +55,12 @@
     (casperjs/then ...)
     (casperjs/wait-for-selector sel)))
 
+(defn lets-wait
+  [time]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/wait time)))
+
 (defn wait-for-xpath
   [path]
   (asynchronize
