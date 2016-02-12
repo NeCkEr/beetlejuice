@@ -1,30 +1,17 @@
 # beetlejuice
 
-style.com e2e test framework
+ClojureScript bindings for CasperJS.  With added ectoplasm.
 
 # Prerequisities
 
 ## Install nvm & nodejs & npm & phantomJS & casperJS
 
-### OSX
-```
-   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
-   source ~/.nvm/nvm.sh
-   nvm install v4.2.3
-   nvm alias default v4.2.3
-   npm install --global phantomjs
-   npm install --global casperjs
-```
-
-## Usage
-
-FIXME
-
-## Run Tests
-
-```
-   lein e2e-test
-```
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
+    source ~/.nvm/nvm.sh
+    nvm install v4.2.3
+    nvm alias default v4.2.3
+    npm install --global phantomjs
+    npm install --global casperjs
 
 ## License
 
@@ -32,8 +19,15 @@ The MIT License (MIT)
 
 Copyright (c) 2016 Condé Nast Commerce Ltd.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit 
+persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the 
+Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
