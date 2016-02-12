@@ -10,8 +10,8 @@ ClojureScript bindings for CasperJS.  With added ectoplasm.
     source ~/.nvm/nvm.sh
     nvm install v4.2.3
     nvm alias default v4.2.3
-    npm install --global phantomjs
-    npm install --global casperjs
+    npm install --global phantomjs@1.9.8
+    npm install --global casperjs@1.1.0-beta3
 
 ## License
 

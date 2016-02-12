@@ -61,6 +61,11 @@
     (casperjs/then ...)
     (casperjs/wait-for-xpath path)))
 
+(defn lets-wait
+  [how-much]
+  (asynchronize
+    (casperjs/wait how-much ...)))
+
 (defn screen-shot
   [name]
   (asynchronize
