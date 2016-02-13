@@ -74,8 +74,8 @@
     (casperjs/capture (str "target/e2e_test_screenshots/" name ".png"))))
 
 (defn scroll-to
-  [x y]
-  (casperjs/scroll-to x y))
+  ([y] (casperjs/scroll-to y))
+  ([x y] (casperjs/scroll-to x y)))
 
 (defn fill-selectors
   [sel data]
