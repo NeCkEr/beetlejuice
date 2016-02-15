@@ -1,2 +1,10 @@
 language: clojure
 
+before_install:
+  - npm install --global phantomjs@1.9.8
+  - npm install --global casperjs@1.1.0-beta3
+
+before_script:
+  - phantomjs --version
+  - casperjs --version
+
