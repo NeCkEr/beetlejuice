@@ -1,4 +1,4 @@
-(defproject beetlejuice "0.2.0-SNAPSHOT"
+(defproject beetlejuice "0.2.0"
 
   :description "ClojureScript bindings for CasperJS. With added ectoplasm."
 

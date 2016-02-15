@@ -1,11 +1,16 @@
 language: clojure
-
 before_install:
-  - npm install casperjs@1.1.0-beta3
-
+- npm install casperjs@1.1.0-beta3
 before_script:
-  - phantomjs --version
-  - casperjs --version
-
-deploy: lein deploy
-
+- phantomjs --version
+- casperjs --version
+before_deploy:
+  - export RELEASE_FILENAME=$(ls target/*.jar)
+  - echo "deploying $RELEASE_FILENAME to GitHub releases"
+deploy:
+  provider: releases
+  api_key:
+    secure: dYvcQjSt0ThbMssdVVtSRLLtxSgz12jcgCOtEBOVbbc9hUIlTCGCA2Je9HwO4x0W2KlEAnnoLCu/UsyFaq8Z4XzjZd1dTNCJ43tB+5s8xNEuP5PbOGPI1aN8fIpgODWC1tlOBL8qVQ7kmmhqk23uoGsFJiyClxzEm3GMDXIeTpbzF36L4UiPeFduOxFZ1wC9RG1wF8dDiKJ8rB5jkd5WaAsCTDMsrRmh88lOBTLMGCLxAH7w/Ga+EfZwllmIoExm3czIf1MaijoYo83GjIO5w+azPOq8+z2ZyZPB1DwSlDeoIeTs4UGM1w6O6/3GoLjY3fEKBILZQaHMpiSoFvcHmuvy6aPTCFPuIO5eMGXrxlAfV9DoVMppha/tuKFGqyTr3G55eSCx3aHxho+CIm28ikbOSbQ0WlvPpimdCUS208wRTJ/8u66dYRiaGrQ2pEBIW4a4SbWXlUS3WmzOJ7l5wtOsae4i7+/dOnm2OcOmGNrR7s+ssB6C6+CTBaA8OxKYWhFX01BJF6YbuzJvDeMclvHdFeHQTCGI17X0Un7tCp2AZHALIUxVGcfZ/VLAUvEmLTkP0DziYhZaPSSbbkZ3tWiL7ZnFKeMw5TgBWMm+DcuE6Zcf23Xl8FnQpAo9vbmPgDpovTJ80SX/se8pXAlnQsykNUwNjaj2eX7qHEKesvo=
+  file: '${RELEASE_FILENAME}'
+  on:
+    repo: cncommerce/beetlejuice
