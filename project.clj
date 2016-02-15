@@ -4,6 +4,9 @@
 
   :url "https://github.com/cncommerce/beetlejuice"
 
+  :scm {:name "git"
+        :url  "https://github.com/cncommerce/beetlejuice"}
+
   :license {:name         "MIT"
             :url          "https://opensource.org/licenses/MIT"
             :distribution :repo}
