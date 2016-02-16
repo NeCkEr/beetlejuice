@@ -174,6 +174,10 @@
   ([] (.run *casper*))
   ([f] (.run *casper* f)))
 
+(defn scroll-to
+  ([y] (.scrollTo *casper* 0 y))
+  ([x y] (.scrollTo *casper* x y)))
+
 (defn set-http-auth [u p] (.setHttpAuth *casper* u p))
 
 (defn start
@@ -240,5 +244,6 @@
   ([url f on-timeout time] (.waitForUrl *casper* (name url) f on-timeout time)))
 
 (defn warn [s] (.warn *casper* s))
+
 
 (defn zoom [n] (.zoom *casper* n))
