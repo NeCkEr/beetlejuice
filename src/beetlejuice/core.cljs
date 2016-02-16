@@ -1,8 +1,14 @@
 (ns beetlejuice.core
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
+<<<<<<< HEAD
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [hickory.core :as hickory :refer [as-hiccup as-hickory parse parse-fragment]]
+=======
+                   [cljs.core.async.macros :refer [go]])
+  (:require [beetlejuice.casperjs :as casperjs]
+            [hickory.core :refer [as-hiccup as-hickory parse parse-fragment]]
+>>>>>>> 4b4910bfba609947b272c83d0814ddfca4ae4cf2
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [clojure.string :as string]
             [clojure.walk :refer [postwalk]]))
@@ -71,7 +77,7 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/wait 100 ...)
-    (casperjs/capture (str "target/e2e_test_screenshots/" name ".png"))))
+    (casperjs/capture (str "target/test/screenshots/" name ".png"))))
 
 (defn scroll-to
   [x y]

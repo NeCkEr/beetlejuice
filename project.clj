@@ -1,8 +1,11 @@
-(defproject beetlejuice "0.1.0-SNAPSHOT"
+(defproject beetlejuice "0.2.1-SNAPSHOT"
 
-  :description "CasperJS single-page application testing tools for ClojureScript"
+  :description "ClojureScript bindings for CasperJS. With added ectoplasm."
 
   :url "https://github.com/cncommerce/beetlejuice"
+
+  :scm {:name "git"
+        :url  "https://github.com/cncommerce/beetlejuice"}
 
   :license {:name         "MIT"
             :url          "https://opensource.org/licenses/MIT"
@@ -16,16 +19,18 @@
   :plugins [[lein-shell "0.4.0"]
             [lein-cljsbuild "1.1.2"]]
 
-  :profiles {:e2e-test {:cljsbuild {:test-commands {"e2e-test" ["casperjs" ".e2e-test/target/app.js"]}
-                                    :builds        [{:id           "e2e-test"
-                                                     :source-paths ["src" "test"]
-                                                     :compiler     {:main          beetlejuice.core-test
-                                                                    :output-to     ".e2e-test/target/app.js"
-                                                                    :output-dir    ".e2e-test/target/"
-                                                                    :source-map    ".e2e-test/target/app.js.map"
-                                                                    :optimizations :whitespace
-                                                                    :pretty-print  false}}]}}}
+  :profiles {:test {:cljsbuild {:test-commands {"test" ["casperjs" "target/test/app.js"]}
+                                :builds        [{:id           "test"
+                                                 :source-paths ["src" "test"]
+                                                 :compiler     {:main          beetlejuice.core-test
+                                                                :output-to     "target/test/app.js"
+                                                                :output-dir    "target/test"
+                                                                :source-map    "target/test/app.js.map"
+                                                                :optimizations :whitespace
+                                                                :pretty-print  false}}]}}}
 
-  :aliases {"e2e-test"          ["do" "clean-e2e-test" "clean-e2e-test-SS" ["with-profiles" "-dev,+e2e-test" "do" ["cljsbuild" "test"]]]
-            "clean-e2e-test"    ["do" "clean-e2e-test-SS" ["shell" "rm" "-rf" ".e2e-test"]]
-            "clean-e2e-test-SS" ["do" ["shell" "rm" "-rf" "./target/e2e_test_screenshots"]]})
+  :aliases {"test"          ["do" "clean-test" "clean-test-SS" ["with-profiles" "-dev,+test" "do" ["cljsbuild" "test"]]]
+            "clean-test"    ["do" "clean-test-SS" ["shell" "rm" "-rf" "target/test"]]
+            "clean-test-SS" ["do" ["shell" "rm" "-rf" "target/test/e2e_test_screenshots"]]}
+
+  :deploy-repositories [["releases" :clojars]])
