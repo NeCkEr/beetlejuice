@@ -74,10 +74,14 @@
     (casperjs/capture (str "target/test/screenshots/" name ".png"))))
 
 (defn scroll-to
-  [x y]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/scroll-to x y)))
+  ([y]
+   (asynchronize
+     (casperjs/then ...)
+     (casperjs/scroll-to y)))
+  ([x y]
+   (asynchronize
+     (casperjs/then ...)
+     (casperjs/scroll-to x y))))
 
 (defn set-viewport
   [w h]
@@ -85,11 +89,6 @@
     (casperjs/then ...)
     (casperjs/viewport w h))
   )
-
-;(defn with-frame
-;  [frame]
-;  (asynchronize
-;    (casperjs/with-frame frame)))
 
 (defn fill-selectors
   [sel data]
