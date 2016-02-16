@@ -1,14 +1,8 @@
 (ns beetlejuice.core
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
-<<<<<<< HEAD
-                   [cljs.core.async.macros :as am :refer [go]])
-  (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
-            [hickory.core :as hickory :refer [as-hiccup as-hickory parse parse-fragment]]
-=======
                    [cljs.core.async.macros :refer [go]])
-  (:require [beetlejuice.casperjs :as casperjs]
+  (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [hickory.core :refer [as-hiccup as-hickory parse parse-fragment]]
->>>>>>> 4b4910bfba609947b272c83d0814ddfca4ae4cf2
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [clojure.string :as string]
             [clojure.walk :refer [postwalk]]))
