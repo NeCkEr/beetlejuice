@@ -7,6 +7,29 @@
             [clojure.string :as string]
             [clojure.walk :refer [postwalk]]))
 
+(defn get-intercepted-XHR []
+  (casperjs/evaluate (fn []
+                       (.-XHR js/window))))
+
+
+;(defn deleteInterceptedXHR)
+(defn get-last-response
+  []
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (let [xhr (js->clj (get-intercepted-XHR) :keywordize-keys true)]
+        (println "gooottt request...")
+        (>! chan (last xhr))
+        ;(.delete-intercepted-XHR js/window)
+        ))
+    chan))
+
+(defn lets-wait
+  [how-much]
+  (asynchronize
+    (casperjs/wait how-much ...)))
+
 (defn click [sel]
   (asynchronize
     (casperjs/then ...)
@@ -32,8 +55,8 @@
   [node]
   (if (or (vector? node) (list? node))
     (->> node
-         (remove #(= {} %))
-         vec)
+      (remove #(= {} %))
+      vec)
     node))
 
 (defn get-element-hiccup
@@ -43,9 +66,9 @@
       (casperjs/then ...)
       (let [casper-html-info (first (casperjs/getElementInfo el))
             element-html     (remove-reactid (:html casper-html-info))
-            parsed-frag (parse-fragment element-html)
-            hiccup-map (first (map as-hiccup parsed-frag))
-            hiccup-map (postwalk remove-empty-maps hiccup-map)]
+            parsed-frag      (parse-fragment element-html)
+            hiccup-map       (first (map as-hiccup parsed-frag))
+            hiccup-map       (postwalk remove-empty-maps hiccup-map)]
         (>! chan hiccup-map)))
     chan))
 

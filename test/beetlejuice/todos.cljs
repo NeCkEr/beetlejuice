@@ -21,6 +21,7 @@
     (beetlejuice/fill-selectors "header#header" {"input[id='new-todo']" todo})))
 
 (defn mark-as-done
+  "As a user I would like to mark my TODOS as done so I can do whater I want"
   []
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='write some tests']/..//input[@type='checkbox']")
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='improve beetlejuice to allow xpath click']/..//input[@type='checkbox']"))

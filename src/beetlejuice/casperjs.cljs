@@ -30,11 +30,15 @@
 ;; Casper API
 ;;
 
+
 (defn dump
   [s]
   (.dump utils (clj->js s)))
 
 (defn then [f] (.then *casper* f))
+
+(defn evaluate
+  [f] (.evaluate *casper* f))
 
 (defn then-evaluate
   ([f] (.thenEvaluate *casper* f))
