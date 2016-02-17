@@ -131,3 +131,8 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/fill-selectors-by-order sel data)))
+
+(defn assert-title
+  [title]
+  (let [bval (= (casperjs/get-title) title)]
+    (assert bval (clojure.string/join "Title should be equal to " title))))

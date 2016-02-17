@@ -39,6 +39,7 @@
               list2-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(2)"))]
           (println list1-hiccup)
           (println list2-hiccup)
+          (beetlejuice/assert-title "Todo List")
           (beetlejuice/screen-shot "1-index")
           (clean-todos)
           (beetlejuice/screen-shot "2-cleaned-todos")

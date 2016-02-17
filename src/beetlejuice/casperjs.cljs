@@ -247,3 +247,5 @@
 
 
 (defn zoom [n] (.zoom *casper* n))
+
+(defn get-title [] (.getTitle *casper*))
