@@ -1,7 +1,7 @@
 (ns beetlejuice.core
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
                    [cljs.core.async.macros :refer [go]])
-  (:require [beetlejuice.casperjs :as casperjs]
+  (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [hickory.core :refer [as-hiccup as-hickory parse parse-fragment]]
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [clojure.string :as string]
@@ -32,8 +32,8 @@
   [node]
   (if (or (vector? node) (list? node))
     (->> node
-         (remove #(= {} %))
-         vec)
+      (remove #(= {} %))
+      vec)
     node))
 
 (defn get-element-hiccup
@@ -43,10 +43,18 @@
       (casperjs/then ...)
       (let [casper-html-info (first (casperjs/getElementInfo el))
             element-html     (remove-reactid (:html casper-html-info))
-            parsed-frag (parse-fragment element-html)
-            hiccup-map (first (map as-hiccup parsed-frag))
-            hiccup-map (postwalk remove-empty-maps hiccup-map)]
+            parsed-frag      (parse-fragment element-html)
+            hiccup-map       (map as-hiccup parsed-frag)
+            hiccup-map       (postwalk remove-empty-maps hiccup-map)]
         (>! chan hiccup-map)))
+    chan))
+
+(defn get-element-info
+  [selector]
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (>! chan (casperjs/getElementInfo selector)))
     chan))
 
 (defn wait-for-selector
@@ -84,3 +92,12 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/fill-selectors-by-order sel data)))
+
+
+(defn element-exists?
+  [sel]
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (>! chan (casperjs/element-exists? sel)))
+    chan))
