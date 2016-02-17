@@ -135,4 +135,6 @@
 (defn assert-title
   [title]
   (let [bval (= (casperjs/get-title) title)]
-    (assert bval (clojure.string/join "Title should be equal to " title))))
+    (if bval
+      (println ">>>>>Title corresponds to" title)
+      (println ">>>>>Title should be" title ". Found" (casperjs/get-title) "instead"))))
