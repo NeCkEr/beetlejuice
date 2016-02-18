@@ -249,3 +249,5 @@
 (defn zoom [n] (.zoom *casper* n))
 
 (defn get-title [] (.getTitle *casper*))
+
+(defn get-current-url [] (.getCurrentUrl *casper*))

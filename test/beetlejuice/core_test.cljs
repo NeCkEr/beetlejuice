@@ -1,11 +1,10 @@
 (ns beetlejuice.core-test
   (:require-macros [cljs.test :refer (is deftest testing async)]
                    [cljs.core.async.macros :as am :refer [go]])
-  (:require [cljs.test]
-            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
+  (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [beetlejuice.core :as beetlejuice]
             [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
-            [beetlejuice.todos :refer [clean-todos add-todos mark-as-done]]))
+            [beetlejuice.todos :refer [assert-title clean-todos mark-as-done add-todos assert-url]]))
 
 (enable-console-print!)
 
@@ -39,7 +38,8 @@
               list2-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(2)"))]
           (println list1-hiccup)
           (println list2-hiccup)
-          (beetlejuice/assert-title "Todo List")
+          (assert-title "Todo List")
+          (assert-url "reagent-todo/index.html")
           (beetlejuice/screen-shot "1-index")
           (clean-todos)
           (beetlejuice/screen-shot "2-cleaned-todos")

@@ -1,5 +1,6 @@
 (ns beetlejuice.todos
-  (:require [beetlejuice.core :as beetlejuice]))
+  (:require [beetlejuice.core :as beetlejuice]
+            [cljs.test :refer-macros [deftest is testing run-tests]]))
 
 (enable-console-print!)
 
@@ -24,3 +25,15 @@
   []
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='write some tests']/..//input[@type='checkbox']")
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='improve beetlejuice to allow xpath click']/..//input[@type='checkbox']"))
+
+(defn assert-title
+  [title]
+  (let [page-title (beetlejuice/get-title)]
+    (is (= page-title title))))
+
+(defn assert-url
+  [url]
+  (let [page-url (beetlejuice/get-current-url)]
+    (is (not= (re-find (re-pattern url) page-url) nil))))
+
+

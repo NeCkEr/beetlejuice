@@ -15,6 +15,20 @@ ClojureScript bindings for CasperJS.  With added ectoplasm.
     npm install --global phantomjs@1.9.8
     npm install --global casperjs@1.1.0-beta3
 
+# Compilation
+
+Leave one terminal open and run this command:
+```
+$ lein with-profiles -dev,+test cljsbuild auto
+```
+
+To run the actual tests run
+```
+$ lein with-profiles -dev,+test test
+```
+
+
+
 ## License
 
 The MIT License (MIT)

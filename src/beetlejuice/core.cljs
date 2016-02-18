@@ -132,9 +132,10 @@
     (casperjs/then ...)
     (casperjs/fill-selectors-by-order sel data)))
 
-(defn assert-title
-  [title]
-  (let [bval (= (casperjs/get-title) title)]
-    (if bval
-      (println ">>>>>Title corresponds to" title)
-      (println ">>>>>Title should be" title ". Found" (casperjs/get-title) "instead"))))
+(defn get-title
+  []
+  (casperjs/get-title))
+
+(defn get-current-url
+  []
+  (casperjs/get-current-url))
