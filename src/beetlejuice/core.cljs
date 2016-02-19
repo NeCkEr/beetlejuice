@@ -36,30 +36,28 @@
          vec)
     node))
 
+(defn f1
+  [c el]
+  (let [casper-html-info (first (casperjs/getElementInfo el))
+        element-html (remove-reactid (:html casper-html-info))
+        parsed-frag (parse-fragment element-html)
+        hiccup-map (first (map as-hiccup parsed-frag))
+        hiccup-map (postwalk remove-empty-maps hiccup-map)]
+    (go
+      (>! c hiccup-map))))
+
 (defn get-element-hiccup
   [el]
-  (let [chan (chan 1)]
-    (asynchronize
-      (casperjs/then ...)
-      (let [casper-html-info (first (casperjs/getElementInfo el))
-            element-html (remove-reactid (:html casper-html-info))
-            parsed-frag (parse-fragment element-html)
-            hiccup-map (first (map as-hiccup parsed-frag))
-            hiccup-map (postwalk remove-empty-maps hiccup-map)]
-        (>! chan hiccup-map)))
-    chan))
+  (let [c (chan 1)]
+    (casperjs/then #(f1 c el))
+    c))
+
 
 (defn wait-for-selector
   [sel]
   (asynchronize
     (casperjs/then ...)
     (casperjs/wait-for-selector sel)))
-
-(defn lets-wait
-  [time]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait time)))
 
 (defn wait-for-xpath
   [path]
@@ -139,3 +137,10 @@
 (defn get-current-url
   []
   (casperjs/get-current-url))
+
+;(defn get-meta-tag
+;  [name]
+;  (asynchronize
+;    (casperjs/then ...)
+;    (casperjs/evaluate (.prototype.slice.call js/Array (.getElementsByTagName js/document "META")))
+;    ))
