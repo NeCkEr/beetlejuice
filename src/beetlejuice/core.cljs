@@ -32,26 +32,25 @@
   [node]
   (if (or (vector? node) (list? node))
     (->> node
-         (remove #(= {} %))
-         vec)
+      (remove #(= {} %))
+      vec)
     node))
 
-(defn f1
+(defn- element-hiccup
   [c el]
   (let [casper-html-info (first (casperjs/getElementInfo el))
-        element-html (remove-reactid (:html casper-html-info))
-        parsed-frag (parse-fragment element-html)
-        hiccup-map (first (map as-hiccup parsed-frag))
-        hiccup-map (postwalk remove-empty-maps hiccup-map)]
+        element-html     (remove-reactid (:html casper-html-info))
+        parsed-frag      (parse-fragment element-html)
+        hiccup-map       (first (map as-hiccup parsed-frag))
+        hiccup-map       (postwalk remove-empty-maps hiccup-map)]
     (go
       (>! c hiccup-map))))
 
 (defn get-element-hiccup
   [el]
   (let [c (chan 1)]
-    (casperjs/then #(f1 c el))
+    (casperjs/then #(element-hiccup c el))
     c))
-
 
 (defn wait-for-selector
   [sel]
