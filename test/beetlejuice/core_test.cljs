@@ -1,11 +1,11 @@
 (ns beetlejuice.core-test
   (:require-macros [cljs.test :refer (is deftest testing async)]
                    [cljs.core.async.macros :as am :refer [go]])
-  (:require [cljs.test]
-            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
+  (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [beetlejuice.core :as beetlejuice]
             [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
-            [beetlejuice.todos :refer [clean-todos add-todos mark-as-done]]))
+            [beetlejuice.todos  :as testscripts]
+            [clojure.walk :refer [postwalk]]))
 
 (enable-console-print!)
 
@@ -27,25 +27,22 @@
 
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
-
 (casperjs/start
   "resources/reagent-todo/index.html"
   (fn []
-    (go
-      (casperjs/echo "BeetleJuice tests starting...")
-      (let [app (<! (beetlejuice/get-element-hiccup "#app"))]
-        (beetlejuice/mouse-move "#todo-list li:first-child")
-        (let [list1-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(1)"))
-              list2-hiccup (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(2)"))]
-          (println list1-hiccup)
-          (println list2-hiccup)
-          (beetlejuice/screen-shot "1-index")
-          (clean-todos)
-          (beetlejuice/screen-shot "2-cleaned-todos")
-          (add-todos)
-          (beetlejuice/screen-shot "3-added-todos")
-          (mark-as-done)
-          (beetlejuice/screen-shot "4-marked-done"))))))
+    (casperjs/echo "BeetleJuice tests starting...")
+    (beetlejuice/mouse-move "#todo-list li:first-child")
+    (testscripts/assert-first-item)
+    (testscripts/assert-title "Todo List")
+    (testscripts/assert-url "reagent-todo/index.html")
+    ;(assert-meta-tag "description" "Todo List app for all your todo needs.")
+    (beetlejuice/screen-shot "1-index")
+    (testscripts/clean-todos)
+    (beetlejuice/screen-shot "2-cleaned-todos")
+    (testscripts/add-todos)
+    (beetlejuice/screen-shot "3-added-todos")
+    (testscripts/mark-as-done)
+    (beetlejuice/screen-shot "4-marked-done")))
 
 
 (casperjs/run)

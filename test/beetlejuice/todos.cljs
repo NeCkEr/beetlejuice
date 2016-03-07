@@ -1,5 +1,8 @@
 (ns beetlejuice.todos
-  (:require [beetlejuice.core :as beetlejuice]))
+  (:require-macros [cljs.core.async.macros :as am :refer [go]])
+  (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
+            [beetlejuice.core :as beetlejuice]
+            [cljs.test :refer-macros [deftest is testing run-tests]]))
 
 (enable-console-print!)
 
@@ -24,3 +27,29 @@
   []
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='write some tests']/..//input[@type='checkbox']")
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='improve beetlejuice to allow xpath click']/..//input[@type='checkbox']"))
+
+(defn assert-title
+  [title]
+  (let [page-title (beetlejuice/get-title)]
+    (is (= page-title title))))
+
+(defn assert-url
+  [url]
+  (let [page-url (beetlejuice/get-current-url)]
+    (is (not= (re-find (re-pattern url) page-url) nil))))
+
+;(defn assert-meta-tag
+;  [name description]
+;  (println ">>>>" (beetlejuice/get-meta-tag name)))
+;
+
+(def old-todos ["Rename Cloact to Reagent"
+                "Add undo demo"
+                "Make all rendering async"
+                "Allow any arguments to component functions"])
+
+(defn assert-first-item
+  []
+  (go
+    (let [label (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(1) label"))]
+      (is (= label "Rename Cloact to Reagent")))))

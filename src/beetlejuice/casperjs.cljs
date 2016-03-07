@@ -145,7 +145,7 @@
   [el]
   (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
 
-(defn get-current-url [] (.getCurrentUrl *casper*))
+;(defn get-current-url [] (.getCurrentUrl *casper*))
 
 (defn get-element-attribute [sel attr] (.getElementAttribute *casper* (name sel) (name attr)))
 
@@ -156,7 +156,7 @@
 
 (defn get-page-content [] (.getPageContent *casper*))
 
-(defn get-title [] (.getTitle *casper*))
+;(defn get-title [] (.getTitle *casper*))
 
 (defn mouse-event [type sel] (.mouseEvent *casper* (name type) (name sel)))
 
@@ -173,6 +173,10 @@
 (defn run
   ([] (.run *casper*))
   ([f] (.run *casper* f)))
+
+(defn scroll-to
+  ([y] (.scrollTo *casper* 0 y))
+  ([x y] (.scrollTo *casper* x y)))
 
 (defn set-http-auth [u p] (.setHttpAuth *casper* u p))
 
@@ -241,4 +245,9 @@
 
 (defn warn [s] (.warn *casper* s))
 
+
 (defn zoom [n] (.zoom *casper* n))
+
+(defn get-title [] (.getTitle *casper*))
+
+(defn get-current-url [] (.getCurrentUrl *casper*))

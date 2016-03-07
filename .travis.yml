@@ -1,11 +1,6 @@
 language: clojure
-
 before_install:
-  - npm install casperjs@1.1.0-beta3
-
+- npm install casperjs@1.1.0-beta3
 before_script:
-  - phantomjs --version
-  - casperjs --version
-
-deploy: lein deploy
-
+- phantomjs --version
+- casperjs --version
