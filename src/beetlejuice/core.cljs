@@ -175,10 +175,4 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/then-evaluate (fn []
-                              (println "before" (let [ls (.-localStorage js/window)
-                                                      k  (.key ls 0)]
-                                                  (.getItem ls k)))
-                              (.clear (.-localStorage js/window))
-                              (println "after" (let [ls (.-localStorage js/window)
-                                                     k  (.key ls 0)]
-                                                 (.getItem ls k)))))))
+                              (.clear (.-localStorage js/window))))))
