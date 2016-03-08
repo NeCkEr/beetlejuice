@@ -141,7 +141,7 @@
     (println (str k " " v))
     (fill-selectors sel {k v})))
 
-(defn getElementInfo
+(defn get-element-info
   [el]
   (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
 
