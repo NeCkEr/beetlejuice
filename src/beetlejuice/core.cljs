@@ -1,6 +1,7 @@
 (ns beetlejuice.core
   (:require-macros [beetlejuice.macros :refer [asynchronize]]
                    [cljs.core.async.macros :refer [go]])
+  (:import goog.string)
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [hickory.core :refer [as-hiccup as-hickory parse parse-fragment]]
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
@@ -52,6 +53,14 @@
     (casperjs/then #(element-hiccup c el))
     c))
 
+(defn get-element-info
+  [selector]
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (>! chan (casperjs/getElementInfo selector)))
+    chan))
+
 (defn wait-for-selector
   [sel]
   (asynchronize
@@ -74,7 +83,7 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/wait 100 ...)
-    (casperjs/capture (str "target/test/screenshots/" name ".png"))))
+    (casperjs/capture (str "target/test/screenshots/" name "-" (.getRandomString string) ".png"))))
 
 (defn scroll-to
   ([y]
@@ -129,6 +138,15 @@
     (casperjs/then ...)
     (casperjs/fill-selectors-by-order sel data)))
 
+
+(defn element-exists?
+  [sel]
+  (let [chan (chan 1)]
+    (asynchronize
+      (casperjs/then ...)
+      (>! chan (casperjs/element-exists? sel)))
+    chan))
+
 (defn get-title
   []
   (casperjs/get-title))
@@ -143,3 +161,18 @@
 ;    (casperjs/then ...)
 ;    (casperjs/evaluate (.prototype.slice.call js/Array (.getElementsByTagName js/document "META")))
 ;    ))
+
+(defn refresh-page []
+  (asynchronize
+    (casperjs/reload ...)))
+
+(defn open-page [url]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/open url)))
+
+(defn clear-local-storage []
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/then-evaluate (fn []
+                              (.clear (.-localStorage js/window))))))
