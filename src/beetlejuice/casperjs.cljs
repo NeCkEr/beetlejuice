@@ -145,7 +145,7 @@
   [el]
   (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
 
-;(defn get-current-url [] (.getCurrentUrl *casper*))
+(defn get-current-url [] (.getCurrentUrl *casper*))
 
 (defn get-element-attribute [sel attr] (.getElementAttribute *casper* (name sel) (name attr)))
 
@@ -156,7 +156,7 @@
 
 (defn get-page-content [] (.getPageContent *casper*))
 
-;(defn get-title [] (.getTitle *casper*))
+(defn get-title [] (.getTitle *casper*))
 
 (defn mouse-event [type sel] (.mouseEvent *casper* (name type) (name sel)))
 
@@ -247,7 +247,3 @@
 
 
 (defn zoom [n] (.zoom *casper* n))
-
-(defn get-title [] (.getTitle *casper*))
-
-(defn get-current-url [] (.getCurrentUrl *casper*))

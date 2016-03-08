@@ -155,14 +155,6 @@
   []
   (casperjs/get-current-url))
 
-(defn element-exists?
-  [sel]
-  (let [chan (chan 1)]
-    (asynchronize
-      (casperjs/then ...)
-      (>! chan (casperjs/element-exists? sel)))
-    chan))
-
 ;(defn get-meta-tag
 ;  [name]
 ;  (asynchronize
@@ -178,3 +170,15 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/open url)))
+
+(defn clear-local-storage []
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/then-evaluate (fn []
+                              (println "before" (let [ls (.-localStorage js/window)
+                                                      k  (.key ls 0)]
+                                                  (.getItem ls k)))
+                              (.clear (.-localStorage js/window))
+                              (println "after" (let [ls (.-localStorage js/window)
+                                                     k  (.key ls 0)]
+                                                 (.getItem ls k)))))))
