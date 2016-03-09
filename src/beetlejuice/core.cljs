@@ -39,7 +39,7 @@
 
 (defn- element-hiccup
   [c el]
-  (let [casper-html-info (first (casperjs/getElementInfo el))
+  (let [casper-html-info (first (casperjs/get-element-info el))
         element-html     (remove-reactid (:html casper-html-info))
         parsed-frag      (parse-fragment element-html)
         hiccup-map       (first (map as-hiccup parsed-frag))
@@ -58,7 +58,7 @@
   (let [chan (chan 1)]
     (asynchronize
       (casperjs/then ...)
-      (>! chan (casperjs/getElementInfo selector)))
+      (>! chan (casperjs/get-element-info selector)))
     chan))
 
 (defn wait-for-selector
