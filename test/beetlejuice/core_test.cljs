@@ -1,10 +1,10 @@
 (ns beetlejuice.core-test
   (:require-macros [cljs.test :refer (is deftest testing async)]
                    [cljs.core.async.macros :as am :refer [go]])
-  (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
-            [beetlejuice.core :as beetlejuice]
-            [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
-            [beetlejuice.todos  :as testscripts]
+  (:require [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
+            [beetlejuice.form-examples-test :as form-examples]
+            [beetlejuice.todo-list-test :as todo-list]
+            [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [clojure.walk :refer [postwalk]]))
 
 (enable-console-print!)
@@ -27,22 +27,20 @@
 
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
-(casperjs/start
-  "resources/reagent-todo/index.html"
-  (fn []
-    (casperjs/echo "BeetleJuice tests starting...")
-    (beetlejuice/mouse-move "#todo-list li:first-child")
-    (testscripts/assert-first-item)
-    (testscripts/assert-title "Todo List")
-    (testscripts/assert-url "reagent-todo/index.html")
-    ;(assert-meta-tag "description" "Todo List app for all your todo needs.")
-    (beetlejuice/screen-shot "1-index")
-    (testscripts/clean-todos)
-    (beetlejuice/screen-shot "2-cleaned-todos")
-    (testscripts/add-todos)
-    (beetlejuice/screen-shot "3-added-todos")
-    (testscripts/mark-as-done)
-    (beetlejuice/screen-shot "4-marked-done")))
+(def suites [todo-list/tests
+             form-examples/fill-xpath-test])
 
+(defn check
+  [suites]
+  (if-let [tests (first suites)]
+    (do
+      (tests)
+      (casperjs/run (partial check (rest suites))))
+    (do
+      (casperjs/log "Finished.")
+      (casperjs/exit))))
 
-(casperjs/run)
+(casperjs/start)
+(casperjs/then #(casperjs/log "Starting..."))
+
+(casperjs/run (partial check suites))

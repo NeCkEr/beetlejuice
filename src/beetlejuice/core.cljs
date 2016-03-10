@@ -99,6 +99,12 @@
     (casperjs/then ...)
     (casperjs/fill-selectors sel data false)))
 
+(defn fill-xpath
+  [sel data]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/fill-xpath sel data false)))
+
 (defn switch-to-frame [frame]
   ;; TODO validate if the frame exists check:
   ;; https://github.com/n1k0/casperjs/blob/8d561c2774653a817f9a1b09b741eb40c5ed4c1a/modules/casper.js#L2366

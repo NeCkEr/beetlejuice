@@ -141,6 +141,10 @@
     (println (str k " " v))
     (fill-selectors sel {k v})))
 
+(defn fill-xpath
+  ([sel data] (.fillXPath *casper* (name sel) (clj->js data)))
+  ([sel data submit?] (.fillXPath *casper* (name sel) (clj->js data) submit?)))
+
 (defn getElementInfo
   [el]
   (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
@@ -181,6 +185,7 @@
 (defn set-http-auth [u p] (.setHttpAuth *casper* u p))
 
 (defn start
+  ([] (.start *casper*))
   ([url] (.start *casper* url))
   ([url f] (.start *casper* url f)))
 
