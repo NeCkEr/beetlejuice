@@ -27,7 +27,7 @@
 
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
-(def suites [todo-list/tests
+(def suites [ ;todo-list/tests
              form-examples/fill-xpath-test])
 
 (defn check
@@ -35,7 +35,7 @@
   (if-let [tests (first suites)]
     (do
       (tests)
-      (casperjs/run (partial check (rest suites))))
+      (casperjs/run #(check (rest suites))))
     (do
       (casperjs/log "Finished.")
       (casperjs/exit))))
@@ -43,4 +43,4 @@
 (casperjs/start)
 (casperjs/then #(casperjs/log "Starting..."))
 
-(casperjs/run (partial check suites))
+(casperjs/run #(check suites))

@@ -13,4 +13,5 @@
       (casperjs/echo "BeetleJuice tests starting...")
       (beetlejuice/screen-shot "forms-01-index")
       (beetlejuice/fill-xpath "table#table-1" {"//select[@id='dropdown-1']" "2"})
+      (beetlejuice/lets-wait 300)
       (beetlejuice/screen-shot "forms-02-approved"))))
