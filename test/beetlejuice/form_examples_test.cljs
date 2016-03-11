@@ -26,7 +26,8 @@
       (beetlejuice/screen-shot "hiccup-01-index")
       (go
         ;(let [e (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='dropdown-1']"}))]
-        (let [e (<! (beetlejuice/get-element-hiccup "#label-1"))]
+
+        (let [e (<! (beetlejuice/get-element-hiccup "asd"))]
         (print (str "LABEL1: " e))
         (is e)))
       ;(is (not (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='not-existing-element']"}))))
