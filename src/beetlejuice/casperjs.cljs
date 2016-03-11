@@ -147,7 +147,7 @@
 
 (defn getElementInfo
   [el]
-  (js->clj (.getElementsInfo *casper* (name el)) :keywordize-keys true))
+  (js->clj (.getElementsInfo *casper* el) :keywordize-keys true))
 
 (defn get-current-url [] (.getCurrentUrl *casper*))
 
