@@ -22,13 +22,19 @@
   (casperjs/start
     "resources/form-examples/form.html"
     (fn []
-      (casperjs/echo "BeetleJuice tests starting...")
-      (beetlejuice/screen-shot "hiccup-01-index")
+      (casperjs/echo "get-element-hiccup-by-xpath-test starting...")
       (go
-        ;(let [e (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='dropdown-1']"}))]
+        (let [e (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='dropdown-1']"}))]
+          (casperjs/echo (str "Element found by XPath: " e))
+          (is (= e [:option {:value "1", :selected ""} "check"])))))))
 
-        (let [e (<! (beetlejuice/get-element-hiccup "asd"))]
-        (print (str "LABEL1: " e))
-        (is e)))
-      ;(is (not (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='not-existing-element']"}))))
-      (beetlejuice/lets-wait 300))))
+(defn get-element-hiccup-by-css-selector-test
+  []
+  (casperjs/start
+    "resources/form-examples/form.html"
+    (fn []
+      (casperjs/echo "get-element-hiccup-by-css-selector-test starting...")
+      (go
+        (let [e (<! (beetlejuice/get-element-hiccup {:type "css" :path "#dropdown-1"}))]
+          (casperjs/echo (str "Element found by CSS selector: " e))
+          (is (= e [:option {:value "1", :selected ""} "check"])))))))

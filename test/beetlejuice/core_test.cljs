@@ -27,9 +27,10 @@
 
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
-(def suites [
+(def suites [todo-list/tests
+             form-examples/fill-xpath-test
              form-examples/get-element-hiccup-by-xpath-test
-             ])
+             form-examples/get-element-hiccup-by-css-selector-test])
 
 (defn check
   [suites]
