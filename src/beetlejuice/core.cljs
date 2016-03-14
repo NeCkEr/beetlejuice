@@ -28,24 +28,36 @@
   [html]
   (string/replace html #"data-reactid=\"[a-zA-Z0-9:;\.\s\(\)\-\,\$]*\"" ""))
 
+(defn cleanHTML
+  "inlines all the HTML elements removing whitespaces newlines and tabs"
+  [html]
+  (-> html
+      (string/replace #">\s+" ">")
+      (string/replace #"\s+<" "<")
+      (string/replace #"\n|\r|\t" "")))
+
 (defn remove-empty-maps
   "given a arbitriary form it checks if is a list or a vector and removes empty maps"
   [node]
   (if (or (vector? node) (list? node))
     (->> node
-      (remove #(= {} %))
-      vec)
+         (remove #(= {} %))
+         vec)
     node))
 
 (defn- element-hiccup
   [c el]
-  (let [casper-html-info (first (casperjs/get-element-info el))
-        element-html     (remove-reactid (:html casper-html-info))
-        parsed-frag      (parse-fragment element-html)
-        hiccup-map       (first (map as-hiccup parsed-frag))
-        hiccup-map       (postwalk remove-empty-maps hiccup-map)]
-    (go
-      (>! c hiccup-map))))
+  (try
+    (let [casper-html-info (first (casperjs/get-element-info (clj->js el)))
+          element-html     (remove-reactid (cleanHTML (:html casper-html-info)))
+          parsed-frag      (parse-fragment element-html)
+          hiccup-map       (first (map as-hiccup parsed-frag))
+          hiccup-map       (postwalk remove-empty-maps hiccup-map)]
+      (go
+        (>! c hiccup-map)))
+    (catch js/Error _
+      (go
+        (>! c [])))))
 
 (defn get-element-hiccup
   [el]
@@ -107,6 +119,12 @@
   (asynchronize
     (casperjs/then ...)
     (casperjs/fill-selectors sel data false)))
+
+(defn fill-xpath
+  [sel data]
+  (asynchronize
+    (casperjs/then ...)
+    (casperjs/fill-xpath sel data false)))
 
 (defn switch-to-frame [frame]
   ;; TODO validate if the frame exists check:
