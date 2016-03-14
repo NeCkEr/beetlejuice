@@ -48,7 +48,7 @@
 (defn- element-hiccup
   [c el]
   (try
-    (let [casper-html-info (first (casperjs/getElementInfo (clj->js el)))
+    (let [casper-html-info (first (casperjs/get-element-info (clj->js el)))
           element-html     (remove-reactid (cleanHTML (:html casper-html-info)))
           parsed-frag      (parse-fragment element-html)
           hiccup-map       (first (map as-hiccup parsed-frag))

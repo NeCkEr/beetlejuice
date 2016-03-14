@@ -1,7 +1,7 @@
 (ns beetlejuice.core-test
   (:require-macros [cljs.test :refer (is deftest testing async)]
                    [cljs.core.async.macros :as am :refer [go]])
-  (:require [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
+  (:require [beetlejuice.casperjs :as casperjs :refer [*casper* get-element-info]]
             [beetlejuice.form-examples-test :as form-examples]
             [beetlejuice.todo-list-test :as todo-list]
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]

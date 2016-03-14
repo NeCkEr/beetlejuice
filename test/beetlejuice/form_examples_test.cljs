@@ -3,7 +3,7 @@
                    [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
             [beetlejuice.core :as beetlejuice]
-            [beetlejuice.casperjs :as casperjs :refer [*casper* getElementInfo]]
+            [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [clojure.walk :refer [postwalk]]))
 
 (defn fill-xpath-test
