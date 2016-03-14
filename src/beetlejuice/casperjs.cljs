@@ -116,7 +116,7 @@
   ([] (.exit *casper*))
   ([status] (.exit *casper* status)))
 
-;(defn exists? [sel] (.exists *casper* (name sel)))
+(defn element-exists? [sel] (.exists *casper* (name sel)))
 
 (defn fetch-text [sel] (.fetchText *casper* (name sel)))
 
@@ -145,7 +145,7 @@
   ([sel data] (.fillXPath *casper* (name sel) (clj->js data)))
   ([sel data submit?] (.fillXPath *casper* (name sel) (clj->js data) submit?)))
 
-(defn getElementInfo
+(defn get-element-info
   [el]
   (js->clj (.getElementsInfo *casper* el) :keywordize-keys true))
 
@@ -252,7 +252,3 @@
 
 
 (defn zoom [n] (.zoom *casper* n))
-
-(defn get-title [] (.getTitle *casper*))
-
-(defn get-current-url [] (.getCurrentUrl *casper*))
