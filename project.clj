@@ -34,9 +34,23 @@
                                                                 :parallel-build true
                                                                 :recompile-dependents false
                                                                 :compiler-stats true
-                                                                :pretty-print  false}}]}}}
+                                                                :pretty-print  false}}]}}
+             :test-one {:cljsbuild {:test-commands {"test" ["casperjs" "target/test/app.js"
+                                                            "--test-suite=beetlejuice.form-examples-test/get-element-hiccup-by-css-selector-test"]}
+                                    :builds        [{:id           "test"
+                                                     :source-paths ["src" "test"]
+                                                     :compiler     {:main          beetlejuice.core-test
+                                                                    :output-to     "target/test/app.js"
+                                                                    :output-dir    "target/test"
+                                                                    :source-map    "target/test/app.js.map"
+                                                                    :optimizations :whitespace
+                                                                    :parallel-build true
+                                                                    :recompile-dependents false
+                                                                    :compiler-stats true
+                                                                    :pretty-print  false}}]}}}
 
   :aliases {"test"          ["do" "clean-test-SS" ["with-profiles" "-dev,+test" "do" ["cljsbuild" "test"]]]
+            "test-one"      ["do" "clean-test-SS" ["with-profiles" "-dev,+test-one" "do" ["cljsbuild" "test"]]]
             "clean-test"    ["do" "clean-test-SS" ["shell" "rm" "-rf" "target/test"]]
             "clean-test-SS" ["do" ["shell" "rm" "-rf" "target/test/e2e_test_screenshots"]]}
 

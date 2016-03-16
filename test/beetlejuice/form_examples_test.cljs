@@ -28,7 +28,7 @@
           (casperjs/echo (str "Element found by XPath: " e))
           (is (= e [:option {:value "1", :selected ""} "check"])))))))
 
-(defn get-element-hiccup-by-css-selector-test
+(defn ^:export get-element-hiccup-by-css-selector-test
   []
   (casperjs/start
     "resources/form-examples/form.html"

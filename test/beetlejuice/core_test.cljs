@@ -3,9 +3,11 @@
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper* get-element-info]]
             [beetlejuice.form-examples-test :as form-examples]
+            [beetlejuice.test-utils :as utils]
             [beetlejuice.todo-list-test :as todo-list]
             [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
-            [clojure.walk :refer [postwalk]]))
+            [clojure.walk :refer [postwalk]]
+            ))
 
 (enable-console-print!)
 
@@ -42,7 +44,17 @@
       (casperjs/log "Finished.")
       (casperjs/exit))))
 
+(defn run-tests
+  []
+  (if-let [test-suite (.get (.-cli *casper*) "test-suite")]
+    #(do
+      (casperjs/log (str "Running only test suite:" test-suite))
+      (utils/invoke test-suite)
+      (casperjs/log "Finished.")
+      (casperjs/exit))
+    #(check suites)))
+
 (casperjs/start)
 (casperjs/then #(casperjs/log "Starting..."))
 
-(casperjs/run #(check suites))
+(casperjs/run (run-tests))
