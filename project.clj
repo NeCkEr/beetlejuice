@@ -1,4 +1,4 @@
-(defproject beetlejuice "0.3.1"
+(defproject beetlejuice "0.3.2-SNAPSHOT"
 
   :hooks [leiningen.cljsbuild]
   :recompile-dependents false
