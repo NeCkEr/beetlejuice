@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cncommerce/beetlejuice.svg?branch=master)](https://travis-ci.org/cncommerce/beetlejuice) [![Clojars Project](https://img.shields.io/clojars/v/beetlejuice.svg)](https://clojars.org/beetlejuice)
+[![Clojars Project](https://img.shields.io/clojars/v/beetlejuice.svg)](https://clojars.org/beetlejuice) [![Build Status](https://travis-ci.org/cncommerce/beetlejuice.svg?branch=master)](https://travis-ci.org/cncommerce/beetlejuice)
 
 # beetlejuice
 
