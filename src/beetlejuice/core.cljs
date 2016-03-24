@@ -1,5 +1,5 @@
 (ns beetlejuice.core
-  (:require-macros [beetlejuice.macros :refer [asynchronize]]
+  (:require-macros [beetlejuice.macros :refer [asynchronize synchronize]]
                    [cljs.core.async.macros :refer [go]])
   (:import goog.string)
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper*]]
@@ -9,23 +9,15 @@
             [clojure.walk :refer [postwalk]]))
 
 (defn click [sel]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/click sel)))
+  (synchronize (casperjs/click sel)))
 
 (defn click-xpath [sel]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/click-xpath sel)))
+  (synchronize (casperjs/click-xpath sel)))
 
-(defn mouse-move
-  [sel]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/mouse-move sel)))
+(defn mouse-move [sel]
+  (synchronize (casperjs/mouse-move sel)))
 
-(defn remove-reactid
-  [html]
+(defn remove-reactid [html]
   (string/replace html #"data-reactid=\"[a-zA-Z0-9:;\.\s\(\)\-\,\$]*\"" ""))
 
 (defn cleanHTML
@@ -65,28 +57,18 @@
     (casperjs/then #(element-hiccup c el))
     c))
 
-(defn get-element-info
-  [selector]
+(defn get-element-info [selector]
   (let [chan (chan 1)]
-    (asynchronize
-      (casperjs/then ...)
-      (>! chan (casperjs/get-element-info selector)))
+    (synchronize (>! chan (casperjs/get-element-info selector)))
     chan))
 
-(defn wait-for-selector
-  [sel]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait-for-selector sel)))
+(defn wait-for-selector [sel]
+  (synchronize (casperjs/wait-for-selector sel)))
 
-(defn wait-for-xpath
-  [path]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait-for-xpath path)))
+(defn wait-for-xpath [path]
+  (synchronize (casperjs/wait-for-xpath path)))
 
-(defn lets-wait
-  [how-much]
+(defn lets-wait [how-much]
   (asynchronize
     (casperjs/wait how-much ...)))
 
@@ -99,69 +81,48 @@
 
 (defn scroll-to
   ([y]
-   (asynchronize
-     (casperjs/then ...)
-     (casperjs/scroll-to y)))
+   (synchronize (casperjs/scroll-to y)))
   ([x y]
-   (asynchronize
-     (casperjs/then ...)
-     (casperjs/scroll-to x y))))
+   (synchronize (casperjs/scroll-to x y))))
 
-(defn set-viewport
-  [w h]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/viewport w h))
-  )
+(defn set-viewport [w h]
+  (synchronize (casperjs/viewport w h)))
 
-(defn fill-selectors
-  [sel data]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/fill-selectors sel data false)))
+(defn fill-selectors [sel data]
+  (synchronize (casperjs/fill-selectors sel data false)))
 
-(defn fill-xpath
-  [sel data]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/fill-xpath sel data false)))
+(defn fill-xpath [sel data]
+  (synchronize (casperjs/fill-xpath sel data false)))
 
 (defn switch-to-frame [frame]
   ;; TODO validate if the frame exists check:
   ;; https://github.com/n1k0/casperjs/blob/8d561c2774653a817f9a1b09b741eb40c5ed4c1a/modules/casper.js#L2366
-  (asynchronize
-    (casperjs/then ...)
+  (synchronize
     (let [page (.-page *casper*)]
       (.switchToChildFrame page frame))))
 
 
 (defn switch-to-parent-frame []
-  (asynchronize
-    (casperjs/then ...)
+  (synchronize
     (let [page (.-page *casper*)]
       (.switchToParentFrame page))))
 
 
-(defn with-frame
-  [frame]
+(defn with-frame [frame]
   (asynchronize
     (.withFrame *casper* frame ...)
     (println "changed to frame:" frame)
     (casperjs/click-xpath "//*[@id=\"app\"]/div/div/section/div/main/div/div/div/div/div/div[2]/div/div/a")))
 
 
-(defn fill-selectors-by-order
-  [sel data]
-  (asynchronize
-    (casperjs/then ...)
+(defn fill-selectors-by-order [sel data]
+  (synchronize
     (casperjs/fill-selectors-by-order sel data)))
 
 
-(defn element-exists?
-  [sel]
+(defn element-exists? [sel]
   (let [chan (chan 1)]
-    (asynchronize
-      (casperjs/then ...)
+    (synchronize
       (>! chan (casperjs/element-exists? sel)))
     chan))
 
@@ -185,12 +146,10 @@
     (casperjs/reload ...)))
 
 (defn open-page [url]
-  (asynchronize
-    (casperjs/then ...)
+  (synchronize
     (casperjs/open url)))
 
 (defn clear-local-storage []
-  (asynchronize
-    (casperjs/then ...)
+  (synchronize
     (casperjs/then-evaluate (fn []
                               (.clear (.-localStorage js/window))))))

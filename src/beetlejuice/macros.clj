@@ -32,3 +32,8 @@
 (defmacro asynchronize [& forms]
   `(cljs.core.async.macros/go
      ~@(map transform forms)))
+
+(defmacro synchronize [& expr]
+  `(do
+     ~@(for [f forms]
+        `(casperjs/then (fn [] ~f)))))
