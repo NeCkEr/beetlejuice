@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/cncommerce/beetlejuice.svg?branch=master)](https://travis-ci.org/cncommerce/beetlejuice)
 
+[![Clojars Project](https://img.shields.io/clojars/v/beetlejuice.svg)](https://clojars.org/beetlejuice)
+
 # beetlejuice
 
 ClojureScript bindings for CasperJS.  With added ectoplasm.
