@@ -6,17 +6,6 @@
             [beetlejuice.casperjs :as casperjs :refer [*casper*]]
             [clojure.walk :refer [postwalk]]))
 
-;; (defn fill-xpath-test
-;;   []
-;;   (casperjs/start
-;;     "resources/form-examples/form.html"
-;;     (fn []
-;;       (casperjs/echo "BeetleJuice tests starting...")
-;;       (beetlejuice/screen-shot "forms-01-index")
-;;       (beetlejuice/fill-xpath "table#table-1" {"//select[@id='dropdown-1']" "2"})
-;;       (beetlejuice/lets-wait 300)
-;;       (beetlejuice/screen-shot "forms-02-approved"))))
-
 (defn start-form []
   (async done
          (casperjs/start "resources/form-examples/form.html")
@@ -48,16 +37,15 @@
                  e (<! c)]
              (casperjs/echo (str "Element found by XPath: " e))
              (is (= e [:option {:value "1", :selected ""} "check"]))
-             (println "Finished asserting")
              (done)))))
 
-(defn get-element-hiccup-by-css-selector-test
-  []
-  (casperjs/start
-    "resources/form-examples/form.html"
-    (fn []
-      (casperjs/echo "get-element-hiccup-by-css-selector-test starting...")
-      (go
-        (let [e (<! (beetlejuice/get-element-hiccup "#dropdown-1"))]
-          (casperjs/echo (str "Element found by CSS selector: " e))
-          (is (= e [:option {:value "1", :selected ""} "check"])))))))
+(deftest get-element-hiccup-by-css-selector-test
+  (casperjs/echo "get-element-hiccup-by-css-selector-test starting...")
+  (async done
+         (go
+           (let [c (beetlejuice/get-element-hiccup "#dropdown-1")
+                 _ (casperjs/run)
+                 e (<! c)]
+             (casperjs/echo (str "Element found by CSS selector: " e))
+             (is (= e [:option {:value "1", :selected ""} "check"]))
+             (done)))))
