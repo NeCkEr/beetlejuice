@@ -52,7 +52,7 @@
 ;;   (casperjs/run #(check suites)))
 
 (defn start-tests []
-  (println "Should be 'Starting tests...'")
+  (println "Starting tests...")
   (run-all-tests #"beetlejuice.*-test"))
 
 (defmethod cljs.test/report [:cljs.test/default :end-run-tests] [m]
