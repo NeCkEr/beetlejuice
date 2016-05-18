@@ -1,5 +1,5 @@
 (ns beetlejuice.core-test
-  (:require-macros [cljs.test :refer (is deftest testing async)]
+  (:require-macros [cljs.test :refer (is deftest testing async run-all-tests)]
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper* get-element-info]]
             [beetlejuice.form-examples-test :as form-examples]
@@ -42,7 +42,19 @@
       (casperjs/log "Finished.")
       (casperjs/exit))))
 
-(casperjs/start)
-(casperjs/then #(casperjs/log "Starting..."))
+(defn legacy
+  ;; Runs the pre-clojure.test tests
+  ;; TODO - remove after transitioning all tests
+  []
+  (casperjs/start)
+  (casperjs/then #(casperjs/log "Starting..."))
 
-(casperjs/run #(check suites))
+  (casperjs/run #(check suites)))
+
+(defn start-tests []
+  (run-all-tests #"beetlejuice.*-test"))
+
+;; Entrypoint
+
+(legacy)
+(start-tests)

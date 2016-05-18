@@ -38,3 +38,7 @@
         (let [e (<! (beetlejuice/get-element-hiccup "#dropdown-1"))]
           (casperjs/echo (str "Element found by CSS selector: " e))
           (is (= e [:option {:value "1", :selected ""} "check"])))))))
+
+(deftest failing-test
+  (testing "that it doesn't work"
+    (is (= 1 0))))
