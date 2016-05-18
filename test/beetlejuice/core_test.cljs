@@ -1,5 +1,5 @@
 (ns beetlejuice.core-test
-  (:require-macros [cljs.test :refer (is deftest testing async run-all-tests)]
+  (:require-macros [cljs.test :refer (is deftest testing async run-all-tests use-fixtures)]
                    [cljs.core.async.macros :as am :refer [go]])
   (:require [beetlejuice.casperjs :as casperjs :refer [*casper* get-element-info]]
             [beetlejuice.form-examples-test :as form-examples]
@@ -52,11 +52,8 @@
 ;;   (casperjs/run #(check suites)))
 
 (defn start-tests []
-  (casperjs/start)
-  (casperjs/then #(casperjs/log "Starting tests..."))
   (println "Should be 'Starting tests...'")
-  (run-all-tests #"beetlejuice.*-test")
-  (casperjs/exit))
+  (run-all-tests #"beetlejuice.*-test"))
 
 ;; Entrypoint
 

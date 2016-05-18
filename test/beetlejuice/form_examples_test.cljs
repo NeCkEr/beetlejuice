@@ -38,7 +38,8 @@
     (beetlejuice/fill-xpath "table#table-1" {"//select[@id='dropdown-1']" "2"})
     (beetlejuice/lets-wait 300)
     (beetlejuice/screen-shot "forms-02-approved")
-    (casperjs/run)))
+    (async done
+           (casperjs/run done))))
 
 (defn get-element-hiccup-by-xpath-test
   []
@@ -62,7 +63,7 @@
           (casperjs/echo (str "Element found by CSS selector: " e))
           (is (= e [:option {:value "1", :selected ""} "check"])))))))
 
-;; (deftest failing-test
-;;   (println "Calling failing-test")
-;;   (testing "that it doesn't work"
-;;     (is (= 1 0))))
+(deftest failing-test
+  (println "Calling failing-test")
+  (testing "that it doesn't work"
+    (is (= 1 0))))
