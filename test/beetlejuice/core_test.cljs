@@ -28,7 +28,7 @@
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
 (def suites [todo-list/tests
-             form-examples/fill-xpath-test
+             ;;form-examples/fill-xpath-test
              form-examples/get-element-hiccup-by-xpath-test
              form-examples/get-element-hiccup-by-css-selector-test])
 
@@ -42,19 +42,23 @@
       (casperjs/log "Finished.")
       (casperjs/exit))))
 
-(defn legacy
-  ;; Runs the pre-clojure.test tests
-  ;; TODO - remove after transitioning all tests
-  []
-  (casperjs/start)
-  (casperjs/then #(casperjs/log "Starting..."))
+;; (defn legacy
+;;   ;; Runs the pre-clojure.test tests
+;;   ;; TODO - remove after transitioning all tests
+;;   []
+;;   (casperjs/start)
+;;   (casperjs/then #(casperjs/log "Starting..."))
 
-  (casperjs/run #(check suites)))
+;;   (casperjs/run #(check suites)))
 
 (defn start-tests []
-  (run-all-tests #"beetlejuice.*-test"))
+  (casperjs/start)
+  (casperjs/then #(casperjs/log "Starting tests..."))
+  (println "Should be 'Starting tests...'")
+  (run-all-tests #"beetlejuice.*-test")
+  (casperjs/exit))
 
 ;; Entrypoint
 
-(legacy)
+;;(legacy)
 (start-tests)
