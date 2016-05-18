@@ -63,6 +63,7 @@
   [el]
   (let [c (chan 1)]
     (casperjs/then #(element-hiccup c el))
+    (casperjs/run)
     c))
 
 (defn get-element-info

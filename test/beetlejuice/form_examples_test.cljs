@@ -32,9 +32,7 @@
   (println "get-element-hiccup-by-xpath-test starting...")
   (async done
          (go
-           (let [c (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='dropdown-1']"})
-                 _ (casperjs/run)
-                 e (<! c)]
+           (let [e (<! (beetlejuice/get-element-hiccup {:type "xpath" :path "//select[@id='dropdown-1']"}))]
              (casperjs/echo (str "Element found by XPath: " e))
              (is (= e [:option {:value "1", :selected ""} "check"]))
              (done)))))
@@ -43,9 +41,7 @@
   (casperjs/echo "get-element-hiccup-by-css-selector-test starting...")
   (async done
          (go
-           (let [c (beetlejuice/get-element-hiccup "#dropdown-1")
-                 _ (casperjs/run)
-                 e (<! c)]
+           (let [e (<! (beetlejuice/get-element-hiccup "#dropdown-1"))]
              (casperjs/echo (str "Element found by CSS selector: " e))
              (is (= e [:option {:value "1", :selected ""} "check"]))
              (done)))))
