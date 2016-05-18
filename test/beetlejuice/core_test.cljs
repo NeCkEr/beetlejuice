@@ -55,6 +55,9 @@
   (println "Should be 'Starting tests...'")
   (run-all-tests #"beetlejuice.*-test"))
 
+(defmethod cljs.test/report [:cljs.test/default :end-run-tests] [m]
+  (casperjs/exit (if (cljs.test/successful? m) 0 1)))
+
 ;; Entrypoint
 
 ;;(legacy)
