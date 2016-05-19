@@ -11,7 +11,6 @@
 
 (casperjs/set-casper-options!
  {:logLevel     "debug"
-  :onRunComplete #(println "...run complete...")
   :verbose      true
   :viewportSize {:width 400 :height 768}
   :pageSetting  {:loadImages true

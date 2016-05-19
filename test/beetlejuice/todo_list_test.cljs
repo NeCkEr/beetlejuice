@@ -10,21 +10,32 @@
          (casperjs/start "resources/reagent-todo/index.html")
          (done)))
 
+(defn end-todo []
+  (println "{end-todo}"))
+
 (use-fixtures :each
-  {:before start-todo})
+  {:before start-todo
+   :after end-todo})
 
 (deftest todo-test
   (casperjs/echo "BeetleJuice tests starting...")
   (beetlejuice/mouse-move "#todo-list li:first-child")
+  (testscripts/assert-first-item)
+  (testscripts/assert-title "Todo List")
+  (testscripts/assert-url "reagent-todo/index.html")
+  (beetlejuice/screen-shot "todo-01-index")
+  (testscripts/clean-todos)
+  (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
+    (fn []
+      (println "SUCCESS")
+      (beetlejuice/screen-shot "todo-02-cleaned-todos"))
+    (fn []
+      (println "TIMEDOUT")
+      (is false)))
   (async done
-         (go
-           (<! (testscripts/assert-first-item))
-           (testscripts/assert-title "Todo List")
-           (testscripts/assert-url "reagent-todo/index.html")
-           (casperjs/capture "target/test/screenshots/todo-01.png")
-           (println "Cleaned nodes" (<! (testscripts/clean-todos)))
-           (casperjs/capture "target/test/screenshots/todo-02.png")
-           (casperjs/run done))))
+         (casperjs/run (fn []
+                         (println "THIS IS NOW DONE")
+                         (done)))))
 
 #_(defn tests []
   (casperjs/start

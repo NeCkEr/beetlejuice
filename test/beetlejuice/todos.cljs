@@ -14,21 +14,12 @@
 
 (defn clean-todos
   []
-  (let [c (chan)]
-    (go
-      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[4]//button")
-      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[3]//button")
-      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[2]//button")
-      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[1]//button")
-      (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
-        (fn []
-          (println "SUCCESS")
-          (go (>! c true)))
-        (fn []
-          (println "TIMEDOUT")
-          (go (>! c false))))
-      (casperjs/run))
-    c))
+  (casperjs/then
+   (fn []
+     (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[4]//button")
+     (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[3]//button")
+     (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[2]//button")
+     (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[1]//button"))))
 
 (defn add-todos
   []
@@ -41,14 +32,14 @@
   (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li//label[text()='improve beetlejuice to allow xpath click']/..//input[@type='checkbox']"))
 
 (defn assert-title
-  [title]
-  (let [page-title (beetlejuice/get-title)]
-    (is (= page-title title))))
+  [page-title]
+  (beetlejuice/get-title (fn [title]
+                           (is (= page-title title)))))
 
 (defn assert-url
   [url]
-  (let [page-url (beetlejuice/get-current-url)]
-    (is (not= (re-find (re-pattern url) page-url) nil))))
+  (beetlejuice/get-current-url (fn [page-url]
+                                 (is (not= (re-find (re-pattern url) page-url) nil)))))
 
 ;(defn assert-meta-tag
 ;  [name description]
@@ -62,6 +53,6 @@
 
 (defn assert-first-item
   []
-  (go
-    (let [label (<! (beetlejuice/get-element-hiccup "#todo-list li:nth-child(1) label"))]
-      (is (= label "Rename Cloact to Reagent")))))
+  (beetlejuice/get-element-hiccup "#todo-list li:nth-child(1) label"
+                                  (fn [label]
+                                    (is (= label "Rename Cloact to Reagent")))))

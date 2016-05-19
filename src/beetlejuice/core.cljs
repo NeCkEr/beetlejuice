@@ -46,25 +46,20 @@
     node))
 
 (defn- element-hiccup
-  [c el]
+  [el]
   (try
     (let [casper-html-info (first (casperjs/get-element-info (clj->js el)))
           element-html     (remove-reactid (cleanHTML (:html casper-html-info)))
           parsed-frag      (parse-fragment element-html)
           hiccup-map       (first (map as-hiccup parsed-frag))
           hiccup-map       (postwalk remove-empty-maps hiccup-map)]
-      (go
-        (>! c hiccup-map)))
+      hiccup-map)
     (catch js/Error _
-      (go
-        (>! c [])))))
+      [])))
 
 (defn get-element-hiccup
-  [el]
-  (let [c (chan 1)]
-    (casperjs/then #(element-hiccup c el))
-    (casperjs/run)
-    c))
+  [el f]
+  (casperjs/then #(f (element-hiccup el))))
 
 (defn get-element-info
   [selector]
@@ -80,11 +75,12 @@
     (casperjs/then ...)
     (casperjs/wait-for-selector sel)))
 
-(defn wait-for-xpath
-  [path]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait-for-xpath path)))
+;; TODO - re-enable
+;; (defn wait-for-xpath
+;;   [path]
+;;   (asynchronize
+;;     (casperjs/then ...)
+;;     (casperjs/wait-for-xpath path)))
 
 (defn lets-wait
   [how-much]
@@ -93,10 +89,8 @@
 
 (defn screen-shot
   [name]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait 100 ...)
-    (casperjs/capture (str "target/test/screenshots/" name "-" (.getRandomString string) ".png"))))
+  (casperjs/then
+   #(casperjs/capture (str "target/test/screenshots/" name "-" (.getRandomString string) ".png"))))
 
 (defn scroll-to
   ([y]
@@ -167,12 +161,12 @@
     chan))
 
 (defn get-title
-  []
-  (casperjs/get-title))
+  [f]
+  (casperjs/then #(f (casperjs/get-title))))
 
 (defn get-current-url
-  []
-  (casperjs/get-current-url))
+  [f]
+  (casperjs/then #(f (casperjs/get-current-url))))
 
 ;(defn get-meta-tag
 ;  [name]
