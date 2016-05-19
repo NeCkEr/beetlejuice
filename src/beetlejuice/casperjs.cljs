@@ -207,15 +207,24 @@
   ([pred f on-timeout time] (.waitFor *casper* pred f on-timeout time)))
 
 (defn wait-for-xpath
-  [path]
+  [path f on-timeout]
   (let [xpath {:type "xpath" :path path}]
-    (.waitForSelector *casper* (.selectXPath (require-js "casper") (name path)))))
+    (.waitForSelector *casper* (.selectXPath (require-js "casper") (name path))
+                      f
+                      on-timeout)))
 
 (defn wait-for-selector
   ([sel] (.waitForSelector *casper* (name sel)))
   ([sel f] (.waitForSelector *casper* (name sel) f))
   ([sel f on-timeout] (.waitForSelector *casper* (name sel) f on-timeout))
   ([sel f on-timeout time] (.waitForSelector *casper* (name sel) f on-timeout time)))
+
+(defn wait-while-xpath
+  [path f on-timeout]
+  (let [xpath {:type "xpath" :path path}]
+    (.waitWhileSelector *casper* (.selectXPath (require-js "casper") (name path))
+                        f
+                        on-timeout)))
 
 (defn wait-while-selector
   ([sel] (.waitWhileSelector *casper* (name sel)))

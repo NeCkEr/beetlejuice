@@ -1,6 +1,7 @@
 (ns beetlejuice.todos
   (:require-macros [cljs.core.async.macros :as am :refer [go]])
   (:require [cljs.core.async :refer [<! >! put! alts! chan close! timeout]]
+            [beetlejuice.casperjs :as casperjs]
             [beetlejuice.core :as beetlejuice]
             [cljs.test :refer-macros [deftest is testing run-tests]]))
 
@@ -13,10 +14,17 @@
 
 (defn clean-todos
   []
-  (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li[4]//button")
-  (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li[3]//button")
-  (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li[2]//button")
-  (beetlejuice/click-xpath "//*[@id='todoapp']//section[@id='main']//li[1]//button"))
+  (let [c (chan)]
+    (go
+      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[4]//button")
+      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[3]//button")
+      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[2]//button")
+      (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[1]//button")
+      (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
+        #(go (>! c true))
+        #(go (>! c false)))
+      (casperjs/run))
+    c))
 
 (defn add-todos
   []

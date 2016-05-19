@@ -27,10 +27,11 @@
 
 (set! (.-waitTimeout (.-options *casper*)) 10000)
 
-(def suites [todo-list/tests
+(def suites [;;todo-list/tests
              ;;form-examples/fill-xpath-test
-             form-examples/get-element-hiccup-by-xpath-test
-             form-examples/get-element-hiccup-by-css-selector-test])
+             ;;form-examples/get-element-hiccup-by-xpath-test
+             ;;form-examples/get-element-hiccup-by-css-selector-test
+             ])
 
 (defn check
   [suites]
@@ -56,6 +57,7 @@
   (run-all-tests #"beetlejuice.*-test"))
 
 (defmethod cljs.test/report [:cljs.test/default :end-run-tests] [m]
+  (println "Finishing!")
   (casperjs/exit (if (cljs.test/successful? m) 0 1)))
 
 ;; Entrypoint
