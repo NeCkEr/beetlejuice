@@ -14,9 +14,11 @@
     (casperjs/click sel)))
 
 (defn click-xpath [sel]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/click-xpath sel)))
+  (casperjs/click-xpath sel)
+  ;(asynchronize
+  ;  (casperjs/then ...)
+  ;  (casperjs/click-xpath sel))
+  )
 
 (defn mouse-move
   [sel]
@@ -32,18 +34,27 @@
   "inlines all the HTML elements removing whitespaces newlines and tabs"
   [html]
   (-> html
-      (string/replace #">\s+" ">")
-      (string/replace #"\s+<" "<")
-      (string/replace #"\n|\r|\t" "")))
+    (string/replace #">\s+" ">")
+    (string/replace #"\s+<" "<")
+    (string/replace #"\n|\r|\t" "")))
 
 (defn remove-empty-maps
   "given a arbitriary form it checks if is a list or a vector and removes empty maps"
   [node]
   (if (or (vector? node) (list? node))
     (->> node
-         (remove #(= {} %))
-         vec)
+      (remove #(= {} %))
+      vec)
     node))
+
+(defn get-element-hiccup2
+  [el]
+  (let [casper-html-info (first (casperjs/get-element-info (clj->js el)))
+        element-html     (remove-reactid (cleanHTML (:html casper-html-info)))
+        parsed-frag      (parse-fragment element-html)
+        hiccup-map       (first (map as-hiccup parsed-frag))
+        hiccup-map       (postwalk remove-empty-maps hiccup-map)]
+    hiccup-map))
 
 (defn- element-hiccup
   [c el]
@@ -57,6 +68,7 @@
         (>! c hiccup-map)))
     (catch js/Error _
       (go
+        (println "ERROR!!!")
         (>! c [])))))
 
 (defn get-element-hiccup
@@ -93,10 +105,7 @@
 
 (defn screen-shot
   [name]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/wait 100 ...)
-    (casperjs/capture (str "target/test/screenshots/" name "-" (.getRandomString string) ".png"))))
+  (casperjs/capture (str "target/test/screenshots/" name "-" (.getRandomString string) ".png")))
 
 (defn scroll-to
   ([y]
@@ -117,9 +126,7 @@
 
 (defn fill-selectors
   [sel data]
-  (asynchronize
-    (casperjs/then ...)
-    (casperjs/fill-selectors sel data false)))
+  (casperjs/fill-selectors sel data false))
 
 (defn fill-xpath
   [sel data]

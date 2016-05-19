@@ -42,6 +42,7 @@
       (casperjs/log "Finished.")
       (casperjs/exit))))
 
+
 ;; (defn legacy
 ;;   ;; Runs the pre-clojure.test tests
 ;;   ;; TODO - remove after transitioning all tests
