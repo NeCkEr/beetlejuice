@@ -18,21 +18,21 @@
    :after end-todo})
 
 (deftest todo-test
-  (casperjs/echo "BeetleJuice tests starting...")
-  (beetlejuice/mouse-move "#todo-list li:first-child")
-  (testscripts/assert-first-item)
-  (testscripts/assert-title "Todo List")
-  (testscripts/assert-url "reagent-todo/index.html")
-  (beetlejuice/screen-shot "todo-01-index")
-  (testscripts/clean-todos)
-  (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
-    (fn []
-      (println "SUCCESS")
-      (beetlejuice/screen-shot "todo-02-cleaned-todos"))
-    (fn []
-      (println "TIMEDOUT")
-      (is false)))
   (async done
+         (casperjs/echo "BeetleJuice tests starting...")
+         (beetlejuice/mouse-move "#todo-list li:first-child")
+         (testscripts/assert-first-item)
+         (testscripts/assert-title "Todo List")
+         (testscripts/assert-url "reagent-todo/index.html")
+         (beetlejuice/screen-shot "todo-01-index")
+         (testscripts/clean-todos)
+         (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
+           (fn []
+             (println "SUCCESS")
+             (beetlejuice/screen-shot "todo-02-cleaned-todos"))
+           (fn []
+             (println "TIMEDOUT")
+             (is false)))
          (casperjs/run (fn []
                          (println "THIS IS NOW DONE")
                          (done)))))
