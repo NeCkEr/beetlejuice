@@ -21,8 +21,12 @@
       (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[2]//button")
       (casperjs/click-xpath "//*[@id='todoapp']//section[@id='main']//li[1]//button")
       (casperjs/wait-while-xpath "//*[@id='todoapp']//section[@id='main']/ul"
-        #(go (>! c true))
-        #(go (>! c false)))
+        (fn []
+          (println "SUCCESS")
+          (go (>! c true)))
+        (fn []
+          (println "TIMEDOUT")
+          (go (>! c false))))
       (casperjs/run))
     c))
 

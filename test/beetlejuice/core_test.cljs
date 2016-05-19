@@ -10,11 +10,12 @@
 (enable-console-print!)
 
 (casperjs/set-casper-options!
-  {:logLevel     "debug"
-   :verbose      true
-   :viewportSize {:width 400 :height 768}
-   :pageSetting  {:loadImages true
-                  :userAgent  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Gecko) Lambdarat/23.0.1062.57"}})
+ {:logLevel     "debug"
+  :onRunComplete #(println "...run complete...")
+  :verbose      true
+  :viewportSize {:width 400 :height 768}
+  :pageSetting  {:loadImages true
+                 :userAgent  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Gecko) Lambdarat/23.0.1062.57"}})
 
 
 ;; Totally optional, otherwise a vanilla Casper instance is create()ed for you
